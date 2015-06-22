@@ -12,9 +12,9 @@ The script does the following operations:
 * Searches all feature names for the character string "mean()" or "std()" and returns the indices of matches
 * Uses these indices to filter the feature data such that only column names containing those strings remain
 * The y_train and y_test data files are imported and combined into a single column
-* The "activity_labels" file is merged with this data to match column names using the y_data code
 * Similar to the y data, the "subject" train and test data are imported and combined to a single column
-* The y data, activity labels and subject data are added to the feature data frame
+* The "activity_labels" file is merged with this data to match column names using the y_data code
+* The y data, subject data, and activity labels are added to the feature data frame
 * The feature names are appended to the data frame as column names
 This process results in a data frame named "data".
 
