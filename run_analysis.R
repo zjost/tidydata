@@ -53,13 +53,6 @@ y_test <- read.table("UCI HAR Dataset/test/y_test.txt")
 # Combine data into single column
 y_data <- rbind(y_train, y_test)
 names(y_data) <- "y"
-# Load activity list table
-act_labs <- read.table("UCI HAR Dataset/activity_labels.txt")
-names(act_labs) <- c("y", "Activity")
-
-# Join tables on "y" column
-y_data <- merge(y_data, act_labs, by.x="y", by.y="y", all.x=T)
-
 
 # Load train and test subject data
 sub_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
@@ -69,11 +62,20 @@ sub_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
 sub_data <- rbind(sub_train, sub_test)
 names(sub_data) <- "sub"
 
+# Bind y and Subject data
+id_bind <- cbind(y_data, sub_data)
+
+# Join data table with activity labels table on "y" column
+# Load activity list table
+act_labs <- read.table("UCI HAR Dataset/activity_labels.txt")
+names(act_labs) <- c("y", "Activity")
+merge_data <- merge(id_bind, act_labs, by.x="y", by.y="y", all.x=T)
+
 # Append to master DF
-data <- cbind(data, y_data, sub_data)
+data <- cbind(data, merge_data)
 
 # Update column name list with the new column names
-col_names <- c(col_names, "y", "Activity", "Subject")
+col_names <- c(col_names, "y", "Subject","Activity")
 
 
 ################################################################
