@@ -6,9 +6,22 @@ The "run_analysis.R" script requires the following packages:
 * plyr
 * dplyr
 
-The script results in two data frames
-* "data" is a table of all observations for the features listed in "CodeBook.md" and is labeled by Subject and Activity.
-* "data2" is a table that aggregates all observations for a given Subject/Activity pair using the mean function.
+The script does the following operations:
+* Combines X_train and X_test feature data.
+* Loads in all feature names
+* Searches all feature names for the character string "mean()" or "std()" and returns the indices of matches
+* Uses these indices to filter the feature data such that only column names containing those strings remain
+* The y_train and y_test data files are imported and combined into a single column
+* The "activity_labels" file is merged with this data to match column names using the y_data code
+* Similar to the y data, the "subject" train and test data are imported and combined to a single column
+* The y data, activity labels and subject data are added to the feature data frame
+* The feature names are appended to the data frame as column names
+This process results in a data frame named "data".
+
+The script aggregates observations by activity/subject id pairs by doing the following:
+* The "melt" command is uses to melt the "data" data frame by using "Subject" and "Activity" as id's and a list of the feature names as the measures.  
+* This melt is then input to the "cast" function by Subject + Activity and aggregates via the "mean" function.
+This process results in a data frame named "data2".
 
 See the CodeBook.md file for more details on the structure of the data frames output by this script.
 
